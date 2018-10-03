@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Button from '@material-ui/core/Button';
 import './App.css';
 
 class App extends Component {
@@ -36,20 +36,16 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <h2>This is not a Pipe</h2>
         </div>
-        <p className="App-intro">
-          {'This is '}
-          <a href="https://github.com/mars/heroku-cra-node">
-            {'create-react-app with a custom Node/Express server'}
-          </a><br/>
-        </p>
         <p className="App-intro">
           {this.state.fetching
             ? 'Fetching message from API'
             : this.state.message}
         </p>
+        <Button variant="contained" color="primary">
+          Hello World
+        </Button>
       </div>
     );
   }
