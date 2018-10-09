@@ -25,8 +25,10 @@ router.route('/plants')
       if (err) {
         res.send(new Error(err));
       } else {
-        res.json({
-          plants
+        res.status(200).json({
+          secretData: "You're authorized to see this secret message.",
+          plants,
+          user: req.user
         });
       }
      });

@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { MuiThemeProvider, createMuiTheme} from '@material-ui/core';
 import { blue, indigo, red }from '@material-ui/core/colors';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 import {
   BrowserRouter as Router,
   Route,
-  Link,
-  Redirect
+  Redirect,
+  Link
 } from 'react-router-dom'
 
 import HomePage from './components/HomePage.js';
@@ -82,31 +86,40 @@ class App extends Component {
       <MuiThemeProvider theme={custTheme}>
         <Router>
           <div>
-            <div className="top-bar">
-              <div className="top-bar-left">
-                <Link to="/">React App</Link>
-              </div>
-              {this.state.authenticated ? (
-                <div className="top-bar-right">
-                  <Link to="/dashboard">Dashboard</Link>
-                  <Link to="/logout">Log out</Link>
-                </div>
-              ) : (
-                <div className="top-bar-right">
-                  <Link to="/login">Log in</Link>
-                  <Link to="/signup">Sign up</Link>
-                </div>
-              )}
-
+            <AppBar position="static">
+              <Toolbar>
+                <Typography variant="title" color="inherit" >
+                  Plants App
+                </Typography>
+                {this.state.authenticated ? (
+                      <div className="top-bar-right">
+                        <Button component={Link} color="inherit" to="/dashboard">
+                          Dashboard
+                        </Button>
+                        <Button component={Link} color="inherit" to="/logout">
+                          Log out
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="top-bar-right">
+                        <Button component={Link} color="inherit" to="/login">
+                          Log in
+                          </Button>
+                        <Button component={Link} to="/signup" color="inherit" > 
+                          Sign Up 
+                        </Button>
+                      </div>
+                    )}
+              </Toolbar>
+            </AppBar>
+            <div>
+              <PropsRoute exact path="/" component={HomePage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
+              <PrivateRoute path="/dashboard" component={DashboardPage}/>
+              <LoggedOutRoute path="/login" component={LoginPage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
+              <LoggedOutRoute path="/signup" component={SignUpPage}/>
+              <Route path="/logout" component={LogoutFunction}/>
             </div>
-
-            <PropsRoute exact path="/" component={HomePage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
-            <PrivateRoute path="/dashboard" component={DashboardPage}/>
-            <LoggedOutRoute path="/login" component={LoginPage} toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()} />
-            <LoggedOutRoute path="/signup" component={SignUpPage}/>
-            <Route path="/logout" component={LogoutFunction}/>
           </div>
-
         </Router>
       </MuiThemeProvider>
     );

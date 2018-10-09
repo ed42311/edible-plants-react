@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 const bcrypt = require('bcryptjs');
 
 const userSchema = new Schema({
-  _id: mongoose.Schema.Types.ObjectId,
   firstName: String,
   lastName: String,
-  avatar: String,
+  createdAt: Date,
+  modifiedAt: Date,
   email: {
     type: String,
     index: {unique: true}
@@ -28,16 +28,16 @@ userSchema.methods.comparePassword = function comparePassword(password, callback
 /**
  * The pre-save hook method.
  */
-userSchema.pre('save', (next) => {
+userSchema.pre('save', function(next) {
   const user = this;
 
   // proceed further only if the password is modified or the user is new
   if (!user.isModified('password')) return next();
 
-  if (this.isNew) {
-    user.createdDate = new Date();
+  if (user.isNew) {
+    user.createdAt = new Date();
   } else {
-    user.isModified = new Date();
+    user.modifiedAt = new Date();
   }
 
   return bcrypt.genSalt((saltError, salt) => {
@@ -53,7 +53,5 @@ userSchema.pre('save', (next) => {
     });
   });
 });
-
-
 
 module.exports = mongoose.model('User', userSchema);

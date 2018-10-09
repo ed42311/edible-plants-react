@@ -10,7 +10,8 @@ export default class SignUpPage extends Component {
       errors: {},
       user: {
         email: '',
-        name: '',
+        firstName: '',
+        lastName: '',
         password: ''
       },
       classes: {}
@@ -28,14 +29,7 @@ export default class SignUpPage extends Component {
   processForm(event) {
     event.preventDefault();
     const { user } = this.state
-    // const name = encodeURIComponent(this.state.user.name)
-    // const email = encodeURIComponent(this.state.user.email)
-    // const password = encodeURIComponent(this.state.user.password)
-    // const formData = `name=${name}&email=${email}&password=${password}`
-    // console.log(formData)
-
-    console.log(user)
-    fetch('/api/users', {
+    fetch('/auth/signup', {
         method: 'POST', 
         headers :  {
           'Content-type': 'application/json'
@@ -43,37 +37,21 @@ export default class SignUpPage extends Component {
         body: JSON.stringify(user), 
       })
       .then(res => res.json())
-      .then(el => {
-        console.log(el)
+      .then(data => {
+        // add errors to state
+        const { message, success } = data
+        if(success){
+          this.setState({
+            errors: {}
+          });
+          localStorage.setItem('successMessage', message);
+          this.props.history.push('/login');
+        } else {
+          this.setState({
+            errors: message
+          });
+        }
       })
-    // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    // xhr.responseType = 'json';
-    // xhr.addEventListener('load', () => {
-    //   if (xhr.status === 200) {
-    //     // success
-
-    //     // change the component-container state
-    //     this.setState({
-    //       errors: {}
-    //     });
-
-    //     // set a message
-    //     localStorage.setItem('successMessage', xhr.response.message);
-
-    //     // redirect user after sign up to login page
-    //     
-    //   } else {
-    //     // failure
-
-    //     const errors = xhr.response.errors ? xhr.response.errors : {};
-    //     errors.summary = xhr.response.message;
-
-    //     this.setState({
-    //       errors
-    //     });
-    //   }
-    // });
-    // xhr.send(formData);
   }
 
   /**

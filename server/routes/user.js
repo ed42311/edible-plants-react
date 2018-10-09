@@ -14,23 +14,27 @@ router.route('/users')
       res.json(users);
     });
   })
-  .post((req, res) => {
-    console.log("******** got to post *******")
-    const user = new User();
-    console.log(req.body)
-    // user._id = mongoose.Types.ObjectId();
-    // user.firstName = req.body.firstName;
-    // user.lastName = req.body.lastName;
-    // user.avatar = req.body.avatar;
-    // user.email = req.body.email;
-    // user.save((err) => {
-    //   if (err)
-    //     res.send(err);
-    //   res.json({
-    //     message: "User created"
-    //   });
-    // });
-  });
+  // .post((req, res) => {
+  //   const { body } = req
+  //   console.log("******** got to post *******")
+  //   const user = new User();
+  //   console.log(body)
+  //   for (const key in body) {
+  //     if (body.hasOwnProperty(key)) {
+  //       user[key] = body[key];
+  //     }
+  //   }
+  //   console.log("before save")
+  //   user.save((err, user) => {
+  //     console.log("inside save")
+  //     if (err)
+  //       res.send(err);
+  //     res.json({
+  //       message: "User Saved",
+  //       user
+  //     });
+  //   });
+  // });
 
 router.route('/user/find/:userid')
   .get((req, res) => {

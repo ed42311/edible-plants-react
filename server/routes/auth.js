@@ -8,8 +8,8 @@ const router = new express.Router();
  * Validate the sign up form
  *
  * @param {object} payload - the HTTP body message
- * @returns {object} The result of validation. Object contains a boolean validation result,
- *                   errors tips, and a global message for the whole form.
+ * @returns {object} The result of validation.
+ *                 
  */
 function validateSignupForm(payload) {
   const errors = {};
@@ -26,9 +26,14 @@ function validateSignupForm(payload) {
     errors.password = 'Password must have at least 8 characters.';
   }
 
-  if (!payload || typeof payload.name !== 'string' || payload.name.trim().length === 0) {
+  if (!payload || typeof payload.firstName !== 'string' || payload.firstName.trim().length === 0) {
     isFormValid = false;
-    errors.name = 'Please provide your name.';
+    errors.name = 'Please provide your given name.';
+  }
+
+  if (!payload || typeof payload.lastName !== 'string' || payload.lastName.trim().length === 0) {
+    isFormValid = false;
+    errors.name = 'Please provide your family name.';
   }
 
   if (!isFormValid) {
@@ -46,8 +51,8 @@ function validateSignupForm(payload) {
  * Validate the login form
  *
  * @param {object} payload - the HTTP body message
- * @returns {object} The result of validation. Object contains a boolean validation result,
- *                   errors tips, and a global message for the whole form.
+ * @returns {object} The result of validation. 
+ *                   
  */
 function validateLoginForm(payload) {
   const errors = {};

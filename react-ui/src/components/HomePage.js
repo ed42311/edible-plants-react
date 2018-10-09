@@ -1,11 +1,10 @@
 import React from 'react';
-import { Card, CardContent } from '@material-ui/core';
+import { Card, CardContent, Typography } from '@material-ui/core';
 import Auth from '../modules/Auth';
 
 class HomePage extends React.Component {
 
   componentDidMount() {
-    // update authenticated state on logout
     this.props.toggleAuthenticateStatus()
   }
 
@@ -13,9 +12,17 @@ class HomePage extends React.Component {
     return (
       <Card className="container">
           {Auth.isUserAuthenticated() ? (
-            <CardContent style={{ fontSize: '16px', color: 'green' }}>Welcome! You are logged in.</CardContent>
+            <CardContent>
+              <Typography>
+                Welcome! You are logged in.
+              </Typography>
+            </CardContent>
           ) : (
-            <CardContent style={{ fontSize: '16px', color: 'green' }}>You are not logged in.</CardContent>
+            <CardContent>
+              <Typography>
+                Welcome to the Plant Api, please make an account or login.
+              </Typography>
+            </CardContent>
           )}
       </Card>
     )

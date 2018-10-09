@@ -22,51 +22,36 @@ const styles = theme => ({
   },
 });
 
-const LoginForm = ({
+const PlantForm = ({
   onSubmit,
   onChange,
-  errors,
-  successMessage,
-  user,
+  plant,
   classes
 }) => (
   <Card>
     <CardContent>
     <form action="/" onSubmit={onSubmit}>
-      <h2 className="card-heading">Login</h2>
-        {successMessage && <p className="success-message">{successMessage}</p>}
-        {errors.summary && <p className="error-message">{errors.summary}</p>}
-
+      <h2 className="card-heading">Add A New Plant</h2>
          <TextField
-          name="email"
-          label="Email"
-          value={user.email}
+          name="commonName"
+          label="Common Name"
+          value={plant.commonName}
           autoComplete="email"
           className={classes.textField}
           onChange={(e) => onChange(e)}
           margin="normal"
         />
-        <TextField
-          name="password"
-          label="Password"
-          className={classes.textField}
-          onChange={(e) => onChange(e)}
-          type="password"
-          autoComplete="current-password"
-          margin="normal"
-        />
         <div>
           <Button  type="submit"  color="primary">
-            Log In
+            Create New Plant
           </Button>
         </div> 
-        <p>Don't have an account? <Link to={'/signup'}>Create one</Link>.</p>
       </form>
     </CardContent>
   </Card>
 );
 
-LoginForm.propTypes = {
+PlantForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
@@ -74,4 +59,4 @@ LoginForm.propTypes = {
   user: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(LoginForm);
+export default withStyles(styles)(PlantForm);

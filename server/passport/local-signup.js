@@ -15,7 +15,8 @@ module.exports = new PassportLocalStrategy({
     _id : mongoose.Types.ObjectId(),
     email: email.trim(),
     password: password.trim(),
-    name: req.body.name.trim()
+    firstName: req.body.firstName.trim(),
+    lastName: req.body.lastName.trim()
   };
 
   const newUser = new User(userData);

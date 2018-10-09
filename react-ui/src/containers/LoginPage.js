@@ -23,6 +23,7 @@ class LoginPage extends React.Component {
     // set the initial component state
     this.state = {
       errors: {},
+      classes: {},
       successMessage,
       user: {
         email: '',
@@ -111,6 +112,7 @@ class LoginPage extends React.Component {
         errors={this.state.errors}
         successMessage={this.state.successMessage}
         user={this.state.user}
+        class={this.state.classes}
       />
     );
   }

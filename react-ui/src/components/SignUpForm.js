@@ -34,7 +34,8 @@ const SignUpForm = ({
   user,
   classes
 }) => (
-  <Card className="container">
+  <Card>
+   <CardContent>
     <form 
       action="/" 
       onSubmit={onSubmit}
@@ -44,11 +45,20 @@ const SignUpForm = ({
       <h2 className="card-heading">Sign Up</h2>
       {errors.summary && <p className="error-message">{errors.summary}</p>}
       <TextField
-        name="name"
-        label="Name"
-        value={user.name}
+        name="firstName"
+        label="First Name"
+        value={user.firstName}
         className={classes.textField}
-        autoComplete="full-name"
+        autoComplete="given-name"
+        onChange={(e) => onChange(e)}
+        margin="normal"
+      />
+       <TextField
+        name="lastName"
+        label="Last Name"
+        value={user.lastName}
+        className={classes.textField}
+        autoComplete="last-name"
         onChange={(e) => onChange(e)}
         margin="normal"
       />
@@ -70,12 +80,14 @@ const SignUpForm = ({
         autoComplete="current-password"
         margin="normal"
       />
-      <Button type="submit"  color="primary" className={classes.button}>
-        Primary
-      </Button>
-
-      <CardContent>Already have an account? <Link to={'/login'}>Log in</Link></CardContent>
+      <div>
+        <Button type="submit" color="primary">
+          Sign Up
+        </Button>
+      </div>
+      <p>Already have an account? <Link to={'/login'}>Log in</Link></p>
     </form>
+    </CardContent>
   </Card>
 );
 
