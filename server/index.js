@@ -20,56 +20,41 @@ const BODYPARSER_OPTS = { extended: true }
 const MONGODB_OPTS = { useCreateIndex: true, useNewUrlParser: true }
 const config = require('./config')
 
-// Multi-process to utilize all CPU cores.
-if (cluster.isMaster) {
-  console.error(`Node cluster master ${process.pid} is running`);
+const app = express();
+const router = express.Router();
 
-  // Fork workers.
-  for (let i = 0; i < numCPUs; i++) {
-    cluster.fork();
-  }
+require('./models').connect(config.dbUri, MONGODB_OPTS)
 
-  cluster.on('exit', (worker, code, signal) => {
-    console.error(`Node cluster worker ${worker.process.pid} exited: code ${code}, signal ${signal}`);
-  });
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
 
-} else {
-  const app = express();
-  const router = express.Router();
+const localSignupStrategy = require('./passport/local-signup');
+const localLoginStrategy = require('./passport/local-login');
+passport.use('local-signup', localSignupStrategy);
+passport.use('local-login', localLoginStrategy);
 
-  require('./models').connect(config.dbUri, MONGODB_OPTS)
+router.use((req, res, next) => {
+  console.log("something is happening");
+  next();
+})
 
-  app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(bodyParser.json());
-  app.use(passport.initialize());
-  app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-  });
-  app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
+app.use('/auth', authRouter);
+app.use('/api', authCheckMiddleware);
+app.use('/api', apiRouter);
+app.use('/api', UserRouter);
+app.use('/api', PlantRouter);
 
-  const localSignupStrategy = require('./passport/local-signup');
-  const localLoginStrategy = require('./passport/local-login');
-  passport.use('local-signup', localSignupStrategy);
-  passport.use('local-login', localLoginStrategy);
+app.get('*', (request, response) => {
+  response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
+});
 
-  router.use((req, res, next) => {
-    console.log("something is happening");
-    next();
-  })
-
-  app.use('/auth', authRouter);
-  app.use('/api', authCheckMiddleware);
-  app.use('/api', apiRouter);
-  app.use('/api', UserRouter);
-  app.use('/api', PlantRouter);
-
-  app.get('*', (request, response) => {
-    response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
-  });
-
-  app.listen(PORT,  () => {
-    console.error(`Node cluster worker ${process.pid}: listening on port ${PORT}`);
-  });
-}
+app.listen(PORT,  () => {
+  console.error(`Node cluster worker ${process.pid}: listening on port ${PORT}`);
+})

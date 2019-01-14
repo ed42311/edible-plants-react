@@ -1,10 +1,7 @@
 {
-  "name": "heroku-cra-node",
+  "name": "edible-plants",
   "version": "1.0.0",
-  "description": "How to use create-react-app with a custom Node API on Heroku",
-  "engines": {
-    "node": "8.9.x"
-  },
+  "description": "Edible plants",
   "scripts": {
     "start": "node server",
     "heroku-postbuild": "cd react-ui/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
@@ -15,20 +12,15 @@
   ],
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "express": "^4.16.3",
-    "jsonwebtoken": "^8.3.0",
-    "mongoose": "^5.3.1",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "mongoose": "^5.4.4",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "validator": "^10.8.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mars/heroku-cra-node.git"
+    "validator": "^10.10.0"
   },
   "keywords": [
     "node",
-    "heroku",
     "create-react-app",
     "react"
   ],
