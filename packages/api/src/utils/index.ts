@@ -7,7 +7,7 @@ const exitOne: (checkPresence: string | boolean | undefined) => void = (
   }
 }
 
-const stringToNumber: (checkPresence: string) => number = (str: string) =>
+const stringToNumber: (str: string) => number = (str: string) =>
   parseInt(str, 10)
 
 export { exitOne, stringToNumber }

@@ -1,0 +1,1 @@
+export type CastStringToNumber = (str: string) => number

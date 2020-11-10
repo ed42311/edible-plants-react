@@ -6,7 +6,8 @@
   "author": "contextCue <14878694+ed42311@users.noreply.github.com>",
   "license": "MIT",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "client"
   ],
   "scripts": {
     "all:clean": "find . -name 'dist' -type d -prune -print -exec rm -rf '{}' ;",

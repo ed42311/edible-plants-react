@@ -1,10 +1,10 @@
-import { Request, Response, NextFunction } from 'express'
+import { ExpressTypesWithNext } from 'typings'
 
-export const loggerMiddleware: (
-  request: Request,
-  response: Response,
-  next: NextFunction
-) => void = (request, _response, next) => {
+export const loggerMiddleware = (
+  request: ExpressTypesWithNext['request'],
+  _response: ExpressTypesWithNext['response'],
+  next: ExpressTypesWithNext['next']
+): void => {
   console.log(`${request.method} ${request.path}`)
   next()
 }
